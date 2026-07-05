@@ -66,8 +66,8 @@ class Settings(BaseSettings):
     # --- RAG ---
     top_k: int = Field(default=8, description="Number of chunks to retrieve")
     embedding_batch_size: int = Field(
-        default=50,
-        description="Texts per embedding API call",
+        default=100,
+        description="Number of chunks to embed in a single API call",
     )
 
     @field_validator("cors_origins", mode="before")
