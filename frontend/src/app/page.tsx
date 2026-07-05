@@ -48,7 +48,7 @@ export default function Home() {
         </div>
 
         <a
-          href="https://github.com/aksharjain/codebase-rag"
+          href="https://github.com/Akshar701/codebase-rag"
           target="_blank"
           rel="noreferrer"
           className="flex items-center space-x-2 text-xs font-semibold text-zinc-400 hover:text-white px-4 py-2 rounded-xl border border-border/10 bg-card/20 hover:bg-card/50 transition-all duration-300"
