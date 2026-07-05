@@ -14,7 +14,7 @@ The application downloads the repository, filters files, performs language-aware
 *   **Next.js 15 Frontend**: Uses the latest App Router, React Server Components (where applicable), Suspense boundaries, and modern shadcn/ui components.
 *   **Intelligent Language-Aware Chunking**: Splits code files along natural logical boundaries (classes, functions, statements) instead of arbitrary characters using LangChain language parsers.
 *   **Google Gemini Integration**: 
-    *   **Embeddings**: Generated using `gemini-embedding-002` (3072 dimensions).
+    *   **Embeddings**: Generated using `gemini-embedding-001` (3072 dimensions).
     *   **Chat Completion**: Generated using `gemini-3.5-flash` (fast, grounded, high context window).
 *   **Pinecone Serverless**: Ingestion is namespace-isolated per repository to ensure fast and targeted query lookups.
 *   **Collapsible Citations**: Chat response messages link directly to the source code blocks, line ranges, and include similarity match scores.
@@ -32,7 +32,7 @@ graph TD
         IngestRoute -->|REST API| GitHub[GitHub tree API]
         GitHub -->|Download| FileFilter[File Filter extension/size]
         FileFilter -->|Source content| Chunker[Intelligent Language Chunker]
-        Chunker -->|Code Chunks + Metadata| Embedder[Gemini Embedder gemini-embedding-002]
+        Chunker -->|Code Chunks + Metadata| Embedder[Gemini Embedder gemini-embedding-001]
         Embedder -->|3072d Vectors| Pinecone[Pinecone Vector DB namespace-isolated]
     end
 
@@ -40,7 +40,7 @@ graph TD
     ChatUI -->|POST /chat| ChatRoute[API Chat Endpoint]
 
     subgraph Query RAG Pipeline
-        ChatRoute -->|Question text| EmbedQuery[Gemini Embedder gemini-embedding-002]
+        ChatRoute -->|Question text| EmbedQuery[Gemini Embedder gemini-embedding-001]
         EmbedQuery -->|Query Vector| PineconeQuery[Pinecone similarity search]
         PineconeQuery -->|Top-k matched chunks| PromptEngine[Prompt Context Builder]
         PromptEngine -->|System Instruction + Context| GeminiLLM[Gemini 3.5 Flash LLM]
