@@ -1,5 +1,5 @@
 """
-Embedding Service — generates text embeddings using Google Gemini's gemini-embedding-001 model.
+Embedding Service — generates text embeddings using Google Gemini's gemini-embedding-002 model.
 
 Features:
 - Thread-safe / Async batching of text chunks

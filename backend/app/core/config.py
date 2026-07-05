@@ -18,7 +18,7 @@ class Settings(BaseSettings):
         description="Gemini model for chat completions",
     )
     gemini_embedding_model: str = Field(
-        default="models/gemini-embedding-001",
+        default="models/gemini-embedding-002",
         description="Gemini model for text embeddings",
     )
     embedding_dimensions: int = Field(
