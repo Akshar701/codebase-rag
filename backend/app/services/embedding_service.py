@@ -36,8 +36,8 @@ class EmbeddingService:
         )
 
     @retry(
-        stop=stop_after_attempt(5),
-        wait=wait_exponential(multiplier=1, min=2, max=15),
+        stop=stop_after_attempt(8),
+        wait=wait_exponential(multiplier=1, min=2, max=65),
         reraise=True,
     )
     def _embed_batch(self, texts: list[str]) -> list[list[float]]:
@@ -83,9 +83,10 @@ class EmbeddingService:
                 logger.debug(f"Embedded batch {idx + 1}/{len(batches)} ({len(batch)} items) in {duration:.2f}s")
                 all_embeddings.extend(vectors)
 
-                # Simple throttle for Gemini free-tier rate limits (1500 RPM for embeddings)
+                # Throttle for Gemini free-tier rate limits (100 req/min for embeddings)
+                # 1.0s sleep ensures we do max 60 requests per minute, staying safely under 100.
                 if idx < len(batches) - 1:
-                    await asyncio.sleep(0.1)
+                    await asyncio.sleep(1.0)
 
             except Exception as e:
                 raise EmbeddingError(
